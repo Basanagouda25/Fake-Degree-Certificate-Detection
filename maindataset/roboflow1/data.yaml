@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['fake', 'qr', 'symbol', 'true']
+
+roboflow:
+  workspace: basanagoudas-workspace
+  project: certificate-forgery-detection-avxar-ieenh
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/basanagoudas-workspace/certificate-forgery-detection-avxar-ieenh/dataset/1

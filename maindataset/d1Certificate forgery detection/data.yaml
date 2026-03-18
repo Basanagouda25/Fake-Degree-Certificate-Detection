@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['fake', 'true']
+
+roboflow:
+  workspace: bnm
+  project: certificate-forgery-detection-avxar
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/bnm/certificate-forgery-detection-avxar/dataset/1
