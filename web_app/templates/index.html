@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Certificate Authentication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>DeepAuth AI</h1>
+            </div>
+            <p class="subtitle">Next-Generation Fake Certificate Detection Engine</p>
+        </header>
+
+        <main class="glass-panel">
+            <div id="upload-section">
+                <!-- Dropzone -->
+                <div id="dropzone" class="dropzone">
+                    <input type="file" id="file-input" accept="image/*" class="hidden">
+                    <div class="dropzone-content">
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 16V12M12 16V8M17 16V10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Drag & Drop your certificate</h3>
+                        <p>or <span class="browse-link">browse files</span> from your device</p>
+                        <p class="file-hint">Supports JPG, PNG (Max 5MB)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-loader area -->
+            <div id="loading-section" class="hidden">
+                <div class="scanner-container">
+                    <div class="scanner-box">
+                        <img id="preview-image" src="" alt="Certificate Preview">
+                        <div class="scanner-line"></div>
+                    </div>
+                </div>
+                <div class="loading-text">
+                    <div class="spinner"></div>
+                    <p>Authenticating Document using Deep Neural Networks...</p>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- Result area -->
+            <div id="result-section" class="hidden">
+                <div class="result-card">
+                    <div class="result-image-box">
+                        <img id="result-image" src="" alt="Result Image">
+                        <div class="badge" id="result-badge">REAL</div>
+                    </div>
+                    
+                    <div class="result-details">
+                        <h2 id="result-title">Authentication Passed</h2>
+                        <div class="score-container">
+                            <div class="score-label">Confidence Score</div>
+                            <div class="score-value">
+                                <span id="confidence-text">98.5%</span>
+                            </div>
+                        </div>
+
+                        <div class="metrics">
+                            <div class="metric">
+                                <span>Model Output:</span>
+                                <strong id="raw-score">0.985</strong>
+                            </div>
+                            <div class="metric">
+                                <span>AI Analysis:</span>
+                                <strong>VGG-MobileNetV2 Hybrid</strong>
+                            </div>
+                        </div>
+
+                        <button id="reset-btn" class="btn-primary">
+                            <span>Scan Another Document</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Powered by Centralized Deep Learning & Federated Learning • Project Review V1.0</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
