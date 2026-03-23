@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Certificate Authentication</title>
+    <title>Federated Learning Non-IID Demo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,17 +16,18 @@
         <div class="blob blob-3"></div>
     </div>
 
-    <div class="container">
+    <div class="container container-wide">
         <header>
             <div class="logo">
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2L3 7L12 12L21 7L12 2Z" fill="white" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 17L12 22L21 17M3 12L12 17L21 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h1>DeepAuth AI</h1>
+                <h1>Privacy-Preserving Federated Framework</h1>
             </div>
-            <p class="subtitle">Next-Generation Fake Certificate Detection Engine</p>
+            <p class="subtitle">Distributed Collaborative Model Training on Non-IID Data</p>
         </header>
 
         <main class="glass-panel">
@@ -40,9 +41,8 @@
                                 <path d="M7 16V12M12 16V8M17 16V10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Drag & Drop your certificate</h3>
-                        <p>or <span class="browse-link">browse files</span> from your device</p>
-                        <p class="file-hint">Supports JPG, PNG (Max 5MB)</p>
+                        <h3>Upload Certificate to Test Architectures</h3>
+                        <p>Evaluate divergence between Standard Federated Learning and Baseline Model</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="loading-text">
                     <div class="spinner"></div>
-                    <p>Authenticating Document using Deep Neural Networks...</p>
+                    <p>Executing Dual Inference on Aggregated Models...</p>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="progress-bar"></div>
@@ -66,42 +66,69 @@
 
             <!-- Result area -->
             <div id="result-section" class="hidden">
-                <div class="result-card">
-                    <div class="result-image-box">
-                        <img id="result-image" src="" alt="Result Image">
-                        <div class="badge" id="result-badge">REAL</div>
+                <div class="results-header" style="text-align:center; margin-bottom: 2rem;">
+                    <h2 style="font-size: 2rem; font-weight: 700;">Architecture Comparison</h2>
+                    <p style="color: var(--text-sec);">Demonstrating Weight Divergence & Model Bias in Distributed Non-IID Datasets</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <!-- Central Model Card -->
+                    <div class="model-card border-glow-blue">
+                        <div class="model-header">
+                            <h3>Centralized Baseline</h3>
+                            <span class="ideal-tag">IID Standard</span>
+                        </div>
+                        <div class="result-image-box">
+                            <img id="cen-image" src="" alt="Result Image">
+                            <div class="badge" id="cen-badge">...</div>
+                        </div>
+                        <div class="result-details text-center mt-3">
+                            <h4 id="cen-title" style="font-size:1.5rem; margin:1rem 0;">Analyzing...</h4>
+                            <div class="score-container">
+                                <div class="score-label">Network Confidence</div>
+                                <div class="score-value">
+                                    <span id="cen-confidence">--</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="result-details">
-                        <h2 id="result-title">Authentication Passed</h2>
-                        <div class="score-container">
-                            <div class="score-label">Confidence Score</div>
-                            <div class="score-value">
-                                <span id="confidence-text">98.5%</span>
+
+                    <!-- FL Model Card -->
+                    <div class="model-card border-glow-red">
+                        <div class="model-header pd-2">
+                            <h3>Federated (Non-IID)</h3>
+                            <span class="biased-tag">Prone to Bias</span>
+                        </div>
+                        <div class="result-image-box">
+                            <img id="fl-image" src="" alt="Result Image">
+                            <div class="badge" id="fl-badge">...</div>
+                        </div>
+                        <div class="result-details text-center mt-3">
+                            <h4 id="fl-title" style="font-size:1.5rem; margin:1rem 0;">Analyzing...</h4>
+                            <div class="score-container">
+                                <div class="score-label">Network Confidence</div>
+                                <div class="score-value">
+                                    <span id="fl-confidence">--</span>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="metrics">
-                            <div class="metric">
-                                <span>Model Output:</span>
-                                <strong id="raw-score">0.985</strong>
-                            </div>
-                            <div class="metric">
-                                <span>AI Analysis:</span>
-                                <strong>VGG-MobileNetV2 Hybrid</strong>
-                            </div>
-                        </div>
-
-                        <button id="reset-btn" class="btn-primary">
-                            <span>Scan Another Document</span>
-                        </button>
                     </div>
                 </div>
+
+                <div class="action-footer" style="margin-top: 3rem; text-align: center;">
+                    <button id="reset-btn" class="btn-primary" style="max-width:300px; display:inline-block;">
+                        <span>Upload Another Certificate</span>
+                    </button>
+                    <div style="margin-top: 20px; color: var(--text-sec); font-size: 0.9rem;">
+                        <p><strong>Observation:</strong> Non-IID distributed architectures exhibit severe local optima trapping, resulting in catastrophic failing on unseen real categories. Our proposed framework introduces proximal regularization (FedProx) to enforce global convergence bounds.</p>
+                    </div>
+                </div>
+
             </div>
         </main>
         
         <footer>
-            <p>Powered by Centralized Deep Learning & Federated Learning • Project Review V1.0</p>
+            <p>Federated Validation Module • Project Review Edition V2.0</p>
         </footer>
     </div>
 

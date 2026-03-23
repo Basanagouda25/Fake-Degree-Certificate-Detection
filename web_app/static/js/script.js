@@ -5,50 +5,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadSection = document.getElementById('upload-section');
     const loadingSection = document.getElementById('loading-section');
     const resultSection = document.getElementById('result-section');
-    
     const previewImage = document.getElementById('preview-image');
     const progressBar = document.getElementById('progress-bar');
     
-    const resultImage = document.getElementById('result-image');
-    const resultBadge = document.getElementById('result-badge');
-    const resultTitle = document.getElementById('result-title');
-    const confidenceText = document.getElementById('confidence-text');
-    const rawScore = document.getElementById('raw-score');
+    // Central Model UI elements
+    const cenImage = document.getElementById('cen-image');
+    const cenBadge = document.getElementById('cen-badge');
+    const cenTitle = document.getElementById('cen-title');
+    const cenConfidence = document.getElementById('cen-confidence');
+    
+    // Federated Model UI elements
+    const flImage = document.getElementById('fl-image');
+    const flBadge = document.getElementById('fl-badge');
+    const flTitle = document.getElementById('fl-title');
+    const flConfidence = document.getElementById('fl-confidence');
     
     const resetBtn = document.getElementById('reset-btn');
 
-    // Click to upload
     dropzone.addEventListener('click', () => fileInput.click());
 
-    // Drag and drop events
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropzone.addEventListener(eventName, preventDefaults, false);
     });
 
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
+    function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
 
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropzone.addEventListener(eventName, () => dropzone.classList.add('active'));
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropzone.addEventListener(eventName, () => dropzone.classList.remove('active'));
-    });
+    ['dragenter', 'dragover'].forEach(eventName => { dropzone.addEventListener(eventName, () => dropzone.classList.add('active')); });
+    ['dragleave', 'drop'].forEach(eventName => { dropzone.addEventListener(eventName, () => dropzone.classList.remove('active')); });
 
     dropzone.addEventListener('drop', (e) => {
         const dt = e.dataTransfer;
-        if (dt.files && dt.files.length) {
-            handleFile(dt.files[0]);
-        }
+        if (dt.files && dt.files.length) { handleFile(dt.files[0]); }
     });
 
     fileInput.addEventListener('change', function() {
-        if (this.files && this.files.length) {
-            handleFile(this.files[0]);
-        }
+        if (this.files && this.files.length) { handleFile(this.files[0]); }
     });
 
     resetBtn.addEventListener('click', () => {
@@ -63,17 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Show local preview immediately
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImage.src = e.target.result;
-            resultImage.src = e.target.result;
+            cenImage.src = e.target.result;
+            flImage.src = e.target.result;
             
-            // Switch UI state
             uploadSection.classList.add('hidden');
             loadingSection.classList.remove('hidden');
             
-            // Upload to server
             uploadAndPredict(file);
         };
         reader.readAsDataURL(file);
@@ -86,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let progress = 0;
         const progressInterval = setInterval(() => {
             progress += Math.random() * 15;
-            if (progress > 90) progress = 90; // Wait for server to finish
+            if (progress > 90) progress = 90;
             progressBar.style.width = Math.min(progress, 90) + '%';
         }, 300);
 
@@ -106,9 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadingSection.classList.add('hidden');
                     return;
                 }
-                
                 showResults(data);
-            }, 500); // Give a split second for 100% progress animation
+            }, 600);
         })
         .catch(error => {
             clearInterval(progressInterval);
@@ -119,27 +107,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function updateCardProps(data, badgeEl, titleEl, confEl) {
+        if (data.status === 'error') {
+            badgeEl.textContent = 'ERROR';
+            badgeEl.className = 'badge warning';
+            titleEl.textContent = 'Inference Failed';
+            titleEl.className = 'text-warning';
+            confEl.textContent = 'N/A';
+            return;
+        }
+
+        badgeEl.textContent = data.label;
+        badgeEl.className = 'badge ' + data.color;
+        
+        if(data.label === 'REAL') {
+            titleEl.textContent = 'Authentication Passed';
+            titleEl.className = 'text-success';
+        } else if(data.label === 'FAKE') {
+            titleEl.textContent = 'Counterfeit Detected';
+            titleEl.className = 'text-danger';
+        } else {
+            titleEl.textContent = 'Authentication Uncertain';
+            titleEl.className = 'text-warning';
+        }
+        
+        confEl.textContent = (data.confidence * 100).toFixed(2) + '%';
+        confEl.className = 'text-' + data.color;
+    }
+
     function showResults(data) {
         loadingSection.classList.add('hidden');
         resultSection.classList.remove('hidden');
         
-        // Update UI with response data
-        resultBadge.textContent = data.label;
-        resultBadge.className = 'badge ' + data.color;
-        
-        if(data.label === 'REAL') {
-            resultTitle.textContent = 'Authentication Passed';
-            resultTitle.className = 'text-success';
-        } else if(data.label === 'FAKE') {
-            resultTitle.textContent = 'Counterfeit Detected';
-            resultTitle.className = 'text-danger';
-        } else {
-            resultTitle.textContent = 'Authentication Uncertain';
-            resultTitle.className = 'text-warning';
-        }
-        
-        confidenceText.textContent = (data.confidence * 100).toFixed(1) + '%';
-        confidenceText.className = 'text-' + data.color;
-        rawScore.textContent = data.score.toFixed(4);
+        updateCardProps(data.central, cenBadge, cenTitle, cenConfidence);
+        updateCardProps(data.federated, flBadge, flTitle, flConfidence);
     }
 });
