@@ -77,6 +77,7 @@ class FLClient:
         """Receive and apply global model weights from server."""
         set_model_weights(self.model, weights)
 
+    # This is the core of FL — local training on private data (of client)
     def fit(self, global_weights, epochs, batch_size):
         """
         Receive global weights, train locally, return updated weights.
